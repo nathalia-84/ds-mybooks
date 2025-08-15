@@ -16,6 +16,7 @@ const BotaoEstilizado = styled.button<MbBotaoProps>`
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
+  border-radius: 8px;
   ${(props: MbBotaoProps) =>
     props.tipo === "primario"
       ? css`

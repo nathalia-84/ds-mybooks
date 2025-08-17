@@ -1,6 +1,6 @@
 {
   "name": "@nathalia-84/ds-mybooks",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Design System moderno para aplicações relacionadas a livros",
   "main": "dist/index.js",
   "module": "dist/index.es.js",

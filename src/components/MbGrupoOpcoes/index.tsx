@@ -1,10 +1,21 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-export type MbGrupoOpcoesProps = {
+export interface MbGrupoOpcao {
+  id: number;
+  titulo?: string;
+  corpo?: string;
+  rodape?: string;
   selecionado?: boolean;
-};
+}
 
-const SectionEstilizada = styled.section<MbGrupoOpcoesProps>`
+export interface MbGrupoOpcoesProps {
+  opcoes: MbGrupoOpcao[];
+  valorPadrao?: MbGrupoOpcao | null;
+  onChange?: (opcao: MbGrupoOpcao) => void;
+}
+
+const SectionEstilizada = styled.section<MbGrupoOpcao>`
   width: 194px;
   height: 88px;
   background: ${(props) =>
@@ -38,30 +49,35 @@ const SectionEstilizada = styled.section<MbGrupoOpcoesProps>`
   }
 `;
 
-export const MbGrupoOpcoes = ({ selecionado = true }: MbGrupoOpcoesProps) => {
+export const MbGrupoOpcoes = ({
+  opcoes,
+  onChange,
+  valorPadrao,
+}: MbGrupoOpcoesProps) => {
+  const [selecao, setSelecao] = useState<MbGrupoOpcao | null>(
+    valorPadrao ?? null
+  );
+  const aoSelecionar = (opcao: MbGrupoOpcao): void => {
+    setSelecao(opcao);
+    onChange?.(opcao);
+  };
+
   return (
     <>
-      <SectionEstilizada selecionado={selecionado}>
-        <header>E-book</header>
-        <div>
-          <strong>R$ 00,00</strong>
-        </div>
-        <footer>.pdf, .epub, .mobi</footer>
-      </SectionEstilizada>
-      <SectionEstilizada selecionado={selecionado}>
-        <header>E-book</header>
-        <div>
-          <strong>R$ 00,00</strong>
-        </div>
-        <footer>.pdf, .epub, .mobi</footer>
-      </SectionEstilizada>
-      <SectionEstilizada selecionado={selecionado}>
-        <header>E-book</header>
-        <div>
-          <strong>R$ 00,00</strong>
-        </div>
-        <footer>.pdf, .epub, .mobi</footer>
-      </SectionEstilizada>
+      {opcoes.map((opcao) => (
+        <SectionEstilizada
+          onClick={() => aoSelecionar(opcao)}
+          key={opcao.id}
+          id={opcao.id}
+          selecionado={selecao?.id === opcao.id}
+        >
+          <header>{opcao.titulo}</header>
+          <div>
+            <strong>{opcao.corpo}</strong>
+          </div>
+          <footer>{opcao.rodape}</footer>
+        </SectionEstilizada>
+      ))}
     </>
   );
 };

@@ -1,3 +1,15 @@
+# v1.0.5 (Sun Aug 17 2025)
+
+#### ⚠️ Pushed to `main`
+
+- feat: update README.md with new components and installation instructions ([@nathalia-84](https://github.com/nathalia-84))
+
+#### Authors: 1
+
+- Nathalia ([@nathalia-84](https://github.com/nathalia-84))
+
+---
+
 # v1.0.4 (Sun Aug 17 2025)
 
 #### ⚠️ Pushed to `main`

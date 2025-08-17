@@ -1,3 +1,15 @@
+# v1.0.3 (Sun Aug 17 2025)
+
+#### ⚠️ Pushed to `main`
+
+- fix: replace npm install with npm ci for consistent dependency installation in release workflow ([@nathalia-84](https://github.com/nathalia-84))
+
+#### Authors: 1
+
+- Nathalia ([@nathalia-84](https://github.com/nathalia-84))
+
+---
+
 # v1.0.2 (Sun Aug 17 2025)
 
 #### ⚠️ Pushed to `main`

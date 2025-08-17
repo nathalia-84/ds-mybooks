@@ -1,0 +1,46 @@
+# Name of our action
+name: Release
+
+# The event that will trigger the action
+on:
+  push:
+    branches: [main]
+
+# what the action will do
+jobs:
+  release:
+    # The operating system it will run on
+    runs-on: ubuntu-latest
+    # This check needs to be in place to prevent a publish loop with auto and github actions
+    if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
+    # The list of steps that the action will go through
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare repository
+        run: git fetch --unshallow --tags
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          registry-url: "https://registry.npmjs.org"
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-deps-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            npm-deps-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Build library
+        run: npm run build:lib
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # npm token, see https://storybook.js.org/tutorials/design-systems-for-developers/react/en/distribute/ to obtain it
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm install
+          npm run build:lib
+          npm run release
